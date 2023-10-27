@@ -1,6 +1,8 @@
 "use client";
 import { useCallback, useEffect, useRef } from 'react';
 import { usePatches } from '../../../context/PatchContext';
+import PatchListItem from './PatchListItem';
+import PatchListFilters from './PatchListFilters';
 
 
 
@@ -26,13 +28,17 @@ const PatchList = () => {
     return (
         <div
             onScroll={handleScroll}
-            className='overflow-y-auto h-[calc(100vh-82px)]'
+            className='overflow-y-auto h-[calc(100vh-82px)] w-full p-4 gap-6'
         >
+            <PatchListFilters 
+                age_groups={patches.ageGroups}
+                filters={patches.patchFilters}
+                setFilters={patches.setPatchFilters}
+            />
             {!patches.patchesLoading && patches.shownPatches.map(patch => (
-                <div key={patch.id}>
-                    <h2>{patch.title}</h2>
-                    <p>{patch.description}</p>
-                </div>
+                <PatchListItem key={patch.id} patch={patch} 
+                    ageGroups={patches.ageGroups}
+                />
             ))}
             {patches.patchesLoading && <p>Loading...</p>}
         </div>
