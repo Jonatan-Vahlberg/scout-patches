@@ -36,19 +36,17 @@ const PatchProvider = ({ children }) => {
     const _filterPatches = () => {
         const { title, age_group, page } = patchFilters;
         console.log("Filtering patches: ", patchFilters)
-        const _shownPatches = patches.filter((patch, index) => {
+        let _shownPatches = patches.filter((patch, index) => {
             if(title && !patch.title.toLowerCase().includes(title.toLowerCase())) {
                 return false;
             }
-            if(age_group && !patch.age_groups.includes(age_group)) {
+            if(age_group && patch.age_groups && !patch.age_groups.includes(age_group)) {
                 return false;
             }
-            if(page) {
-                const end = page * 10;
-                return index < end;
-            }
+
             return true;
         });
+        _shownPatches = _shownPatches.slice(0, page * 10);
         setShownPatches(_shownPatches);
     }
     console.log("FIlters", patchFilters)
