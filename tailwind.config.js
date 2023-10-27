@@ -53,6 +53,13 @@ module.exports = {
           light: '#2c2a5f',
           dark: '#16143a',
         },
+        ages: {
+          DEFAULT: '#41a62a',
+          0: '#41a62a',
+          1: '#00a8e1',
+          2: '#d14800',
+          3: '#da005e',
+        }
       },
       button: {
         primary: {
@@ -70,7 +77,24 @@ module.exports = {
           hover: '#2c2a5f',
           active: '#16143a',
         },
-      }
+      },
+      border: {
+        primary: {
+          DEFAULT: '#003660',
+          hover: '#305b7d',
+          active: '#002b4d',
+        },
+        secondary: {
+          DEFAULT: '#622599',
+          hover: '#7e3da5',
+          active: '#4a1a7f',
+        },
+        tertiary: {
+          DEFAULT: '#201e4d',
+          hover: '#2c2a5f',
+          active: '#16143a',
+        },
+      },
     },
   },
   darkMode: 'class', // or 'media'
