@@ -17,13 +17,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Get a reference to the database service
-const Database = getDatabase(app);
+const App = initializeApp(firebaseConfig);
 
 // Get a reference to the auth service
 
-const Auth = getAuth(app);
+const auth = getAuth(App);
 
-export { Database, Auth };
+const database = getDatabase(App);
+
+export { 
+  App,
+  auth,
+  database
+};
