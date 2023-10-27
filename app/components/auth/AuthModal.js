@@ -17,8 +17,8 @@ const AuthModal = () => {
   console.log("isOpen: ", isOpen);
   return (
     <>
-      <Button onClick={onOpen} className="">
-        <FaUserCircle className="text-gray-500" size={24} />
+      <Button onClick={onOpen} className="bg-transparent">
+        <FaUserCircle className="text-white" size={32} />
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
