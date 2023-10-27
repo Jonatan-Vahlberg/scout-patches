@@ -1,4 +1,4 @@
-const { createContext, useState, useEffect } = require("react");
+const { createContext, useState, useEffect, useContext } = require("react");
 
 
 const defaultState = {
@@ -31,22 +31,27 @@ const PatchProvider = ({ children }) => {
 
     useEffect(() => {
         _filterPatches();
-    }, [patchFilters]);
+    }, [patchFilters, patches]);
 
     const _filterPatches = () => {
         const { title, age_group, page } = patchFilters;
-        const _shownPatches = patches.filter(patch => {
-            if(title && patch.title.toLowerCase().includes(title.toLowerCase())) {
-                return true;
+        console.log("Filtering patches: ", patchFilters)
+        const _shownPatches = patches.filter((patch, index) => {
+            if(title && !patch.title.toLowerCase().includes(title.toLowerCase())) {
+                return false;
             }
-            if(age_group && patch.age_groups.includes(age_group)) {
-                return true;
+            if(age_group && !patch.age_groups.includes(age_group)) {
+                return false;
             }
-            return false;
+            if(page) {
+                const end = page * 10;
+                return index < end;
+            }
+            return true;
         });
         setShownPatches(_shownPatches);
     }
-
+    console.log("FIlters", patchFilters)
     const _getPatches = async () => {
         setPatchesLoading(true);
         const url = "api/patches";
