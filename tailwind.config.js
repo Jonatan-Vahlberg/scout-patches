@@ -49,6 +49,8 @@ module.exports = {
           lighter: '#467193',
           lightest: '#668caa',
           dark: '#002b4d',
+          darker: '#00223f',
+          darkest: '#001b33',
         },
         waggs: {
           DEFAULT: '#201e4d',
