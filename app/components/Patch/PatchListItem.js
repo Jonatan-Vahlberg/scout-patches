@@ -26,7 +26,6 @@ const PatchListItem = ({ patch, ageGroups = [] }) => {
             <div className="flex items-center gap-2">
               {patch?.age_groups &&
                 patch.age_groups.map((age_group) => {
-                  console.log(age_group, ageGroups);
                   const ageGroup = ageGroups.find((ag) => ag.id === age_group);
                   return (
                     <PatchListAgeIcon key={age_group} age_group={ageGroup} />
