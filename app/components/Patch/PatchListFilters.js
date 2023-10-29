@@ -5,7 +5,7 @@ const PatchListFilters = ({
   setFilters = () => {},
   age_groups = [],
 }) => {
-    // console.log("Filters: ", filters)
+
   return (
     <Card className="w-full mb-3 p-4">
         <CardHeader className="pt-0">
