@@ -28,14 +28,23 @@ const UserProvider = ({ children }) => {
     useEffect(() => {
        auth.onAuthStateChanged(async (user) => {
               if(user) {
-                setUser(user);
-                setUserLoading(false);
+               _onUser(user);
               } else {
                 setUser(null);
                 setUserLoading(false);
               }
          });
     },[]);
+
+    const _onUser = (user) => {
+        setUser({
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            accessToken: user.accessToken,
+        });
+        setUserLoading(false);
+    }
 
     console.log("USER:: ", user)
 
@@ -44,8 +53,7 @@ const UserProvider = ({ children }) => {
         const response = await firebaseLogin(email, password);
         console.log("RESPONSE:: ", response)
         if(response.user) {
-            setUser(response.user);
-            setUserLoading(false);
+            _onUser(response.user);
             onLoggedIn();
         } else {
             onError(response);
