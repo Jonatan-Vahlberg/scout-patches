@@ -1,48 +1,99 @@
 "use client";
-import { useCallback, useEffect, useRef } from 'react';
-import { usePatches } from '../../../context/PatchContext';
-import PatchListItem from './PatchListItem';
-import PatchListFilters from './PatchListFilters';
+import { useCallback, useRef, useState } from "react";
+import { usePatches } from "../../../context/PatchContext";
+import PatchListItem from "./PatchListItem";
+import PatchListFilters from "./PatchListFilters";
+import { FaChevronUp } from "react-icons/fa";
+import { Button } from "@nextui-org/react";
+import PatchListLoadingItem from "./PatchListLoadingItem";
 
-
+const filterHeight = 150;
 
 const PatchList = () => {
-    const patches = usePatches();
-    const listRef = useRef(null);
+  const patches = usePatches();
+  const [filterIsvisible, setFilterIsVisible] = useState(true);
 
-    const handleScroll = useCallback((e) => {
-        const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-        console.log("Scrolling: ", scrollTop, scrollHeight, clientHeight);
-        if(patches.patchesLoading) return;
-        if(patches.patches.length === patches.shownPatches.length) return;
-        if(scrollTop + clientHeight >= scrollHeight) {
+  const list = useRef(null);
 
-            patches.setPatchFilters(state => ({
-                ...state,
-                page: state.page + 1,
-            
-            }));
-        }
-    }, [patches.patchesLoading, patches.patches.length, patches.shownPatches.length]);
+  const handleScroll = useCallback(
+    (e) => {
+      const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+      console.log(
+        "Scrolling: ",
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+        filterIsvisible
+      );
 
-    return (
-        <div
-            onScroll={handleScroll}
-            className='overflow-y-auto h-[calc(100vh-82px)] w-full p-4 gap-6'
+      if (scrollTop > filterHeight && filterIsvisible) {
+        setFilterIsVisible(false);
+      } else if (scrollTop < filterHeight && !filterIsvisible) {
+        setFilterIsVisible(true);
+      }
+
+      if (patches.patchesLoading) return;
+      if (patches.patches.length === patches.shownPatches.length) return;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        patches.setPatchFilters((state) => ({
+          ...state,
+          page: state.page + 1,
+        }));
+      }
+    },
+    [
+      patches.patchesLoading,
+      patches.patches.length,
+      patches.shownPatches.length,
+      filterIsvisible,
+    ]
+  );
+
+  return (
+    <div
+      onScroll={handleScroll}
+      ref={list}
+      className="relative overflow-y-auto h-[calc(100vh-82px)] w-full p-4 gap-6"
+    >
+      <PatchListFilters
+        age_groups={patches.ageGroups}
+        filters={patches.patchFilters}
+        setFilters={patches.setPatchFilters}
+      />
+      {!filterIsvisible && (
+        <Button
+          onClick={() => {
+            list.current.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="sticky -top-2 left-1/2 -translate-x-1/2 z-10 bg-sweden-dark h-12 rounded-full aspect-square p-0 flex justify-center items-center"
         >
-            <PatchListFilters 
-                age_groups={patches.ageGroups}
-                filters={patches.patchFilters}
-                setFilters={patches.setPatchFilters}
-            />
-            {!patches.patchesLoading && patches.shownPatches.map(patch => (
-                <PatchListItem key={patch.id} patch={patch} 
-                    ageGroups={patches.ageGroups}
-                />
-            ))}
-            {patches.patchesLoading && <p>Loading...</p>}
-        </div>
-    );
-}
+          <FaChevronUp
+            className="absolute -translate-y-1 text-white"
+            size={20}
+          />
+          <FaChevronUp
+            className="absolute translate-y-1 text-white"
+            size={20}
+          />
+        </Button>
+      )}
+      {!patches.patchesLoading &&
+        patches.shownPatches.map((patch) => (
+          <PatchListItem
+            key={patch.id}
+            patch={patch}
+            ageGroups={patches.ageGroups}
+          />
+        ))}
+      {patches.patchesLoading && (
+        <>
+        <PatchListLoadingItem/>
+        <PatchListLoadingItem/>
+        <PatchListLoadingItem/>
+        </>
+      )}
+    </div>
+  );
+};
 
 export default PatchList;
