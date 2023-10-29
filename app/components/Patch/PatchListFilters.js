@@ -5,6 +5,7 @@ const PatchListFilters = ({
   setFilters = () => {},
   age_groups = [],
 }) => {
+    // console.log("Filters: ", filters)
   return (
     <Card className="w-full mb-3 p-4">
         <CardHeader className="pt-0">
@@ -31,12 +32,18 @@ const PatchListFilters = ({
             placeholder="Välj åldersgrupp"
             value={filters.age_group}
             onChange={(e) =>
-              setFilters((state) => ({
-                ...state,
-                age_group: e.target.value,
-              }))
+              setFilters((state) => {
+                const newFilters = { ...state };
+                if (e.target.value === "$.0") {
+                  delete newFilters.age_group;
+                } else {
+                  newFilters.age_group = e.target.value;
+                }
+                return newFilters;
+              })
             }
           >
+            <SelectItem>Välj åldersgrupp</SelectItem>
             {age_groups.map((age_group) => (
               <SelectItem key={age_group.id} value={age_group.id}>
                 {age_group.name}

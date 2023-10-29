@@ -1,13 +1,13 @@
 import Image from "next/image";
 
-const PatchListAgeIcon = ({ age_group }) => {
+const PatchListAgeIcon = ({ age_group = {} }) => {
   return (
     <div
-      className={`bg-ages-${age_group.index} h-9 w-9 flex items-center justify-center rounded-full`}
+      className={`bg-ages-${age_group?.index} h-9 w-9 flex items-center justify-center rounded-full`}
     >
       <div className="patch-list-age-icon">
         <Image
-          src={`/images/age_groups/${age_group.index}.svg`}
+          src={`/images/age_groups/${age_group?.index}.svg`}
           width={25}
           height={25}
           className="object-contain invert"
