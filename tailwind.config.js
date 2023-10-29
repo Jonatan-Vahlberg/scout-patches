@@ -46,6 +46,8 @@ module.exports = {
         sweden: {
           DEFAULT: '#04549c',
           light: '#305b7d',
+          lighter: '#467193',
+          lightest: '#668caa',
           dark: '#002b4d',
         },
         waggs: {
