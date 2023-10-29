@@ -38,10 +38,9 @@ const Loadingbar = ({
             {percent !== 100 && !locked && (
                 <span className="text-white text-xs">{percent}%</span>
             )}
-            {!locked & percent === 100 && (
+            { percent === 100 && !locked && (
                 <FaCheck className="text-white" size={10} />
             )}
-
           </div>
       </div>
       <div className="display-none bg-sweden-dark border-sweden-dark" />

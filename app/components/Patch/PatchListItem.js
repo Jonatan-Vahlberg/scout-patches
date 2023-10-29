@@ -5,8 +5,22 @@ import Image from "next/image";
 import PatchListAgeIcon from "./PatchListAgeIcon";
 import Loadingbar from "../globals/Loadingbar";
 import Link from "next/link";
+import { useUser } from "@/context/UserContext";
+import { useEffect, useState } from "react";
 
 const PatchListItem = ({ patch, ageGroups = [] }) => {
+    const user = useUser();
+    console.log("USER:: ", !!user.user)
+    const [userPatch, setUserPatch] = useState(null);
+
+    useEffect(() => {
+        if(user.userPatches.length > 0) {
+            const userPatch = user.userPatches.find((userPatch) => userPatch.patch_id === patch.id);
+            setUserPatch(userPatch);
+        }
+    },[user.userPatches])
+
+
   return (
     <Link href={`/patch/${patch.id}`}>
       <Card className="flex flex-col p-4 mb-4">
@@ -39,8 +53,8 @@ const PatchListItem = ({ patch, ageGroups = [] }) => {
           <p className="text-sm">{patch.notes}</p>
         </div>
         <Loadingbar 
-            locked={false}
-            barWidth={100}
+            locked={!user.user}
+            barWidth={userPatch?.progress || 0}
         />
       </Card>
     </Link>
