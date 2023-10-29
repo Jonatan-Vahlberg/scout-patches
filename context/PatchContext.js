@@ -35,7 +35,7 @@ const PatchProvider = ({ children }) => {
 
     const _filterPatches = () => {
         const { title, age_group, page } = patchFilters;
-        console.log("Filtering patches: ", patchFilters)
+        
         let _shownPatches = patches.filter((patch, index) => {
             if(title && !patch.title.toLowerCase().includes(title.toLowerCase())) {
                 return false;
@@ -49,13 +49,12 @@ const PatchProvider = ({ children }) => {
         _shownPatches = _shownPatches.slice(0, page * 10);
         setShownPatches(_shownPatches);
     }
-    console.log("FIlters", patchFilters)
+
     const _getPatches = async () => {
         setPatchesLoading(true);
-        const url = "api/patches";
+        const url = "api/v1/patches";
         const res = await fetch(url)
         const data = await res.json();
-        console.log("Patches: ", data);
         if(data.status === 200) {
             setPatches(data.data);
         }
@@ -64,10 +63,9 @@ const PatchProvider = ({ children }) => {
 
     const _getAgeGroups = async () => {
         setAgeGroupsLoading(true);
-        const url = "api/age-groups";
+        const url = "api/v1/age-groups";
         const res = await fetch(url);
         const data = await res.json();
-        console.log("Age groups: ", data);
         if(data.status === 200) {
             setAgeGroups(data.data.sort((a, b) => a.index - b.index));
         }
