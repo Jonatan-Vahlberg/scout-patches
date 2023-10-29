@@ -51,7 +51,7 @@ const UserProvider = ({ children }) => {
     const login = async (email, password, onLoggedIn = () => {}, onError = () => {}) => {
         setUserLoading(true);
         const response = await firebaseLogin(email, password);
-        console.log("RESPONSE:: ", response)
+        
         if(response.user) {
             _onUser(response.user);
             onLoggedIn();

@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 const PatchListItem = ({ patch, ageGroups = [] }) => {
     const user = useUser();
-    console.log("USER:: ", !!user.user)
+    
     const [userPatch, setUserPatch] = useState(null);
 
     useEffect(() => {
