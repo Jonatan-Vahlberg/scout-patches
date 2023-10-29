@@ -18,14 +18,6 @@ const PatchList = () => {
   const handleScroll = useCallback(
     (e) => {
       const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-      console.log(
-        "Scrolling: ",
-        scrollTop,
-        scrollHeight,
-        clientHeight,
-        filterIsvisible
-      );
-
       if (scrollTop > filterHeight && filterIsvisible) {
         setFilterIsVisible(false);
       } else if (scrollTop < filterHeight && !filterIsvisible) {

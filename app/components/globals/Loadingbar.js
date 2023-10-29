@@ -8,7 +8,7 @@ const Loadingbar = ({
   barWidth = 0,
   onLockClick = () => {},
 }) => {
-  console.log("Locked", classNameBar, classNameBorder,);
+  
   const color = locked ? "sweden-lightest" : "sweden-dark";
   const percent = Math.round(barWidth);
   barWidth = locked ? "full" : barWidth;

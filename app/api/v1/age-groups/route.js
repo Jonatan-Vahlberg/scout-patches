@@ -18,11 +18,11 @@ export async function GET(req) {
         }
         return NextResponse.json({
             status: 404,
-            data: "No patches found",
+            data: "No age groups found",
         });
        
     } catch (error) {
-        console.log("error", error);
+        console.warn("Error Age groups: ", error);
         return error;
     }
 }

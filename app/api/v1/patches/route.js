@@ -22,7 +22,7 @@ export async function GET(req) {
         });
        
     } catch (error) {
-        console.log("error", error);
+        console.warn("Error Patches: ", error);
         return error;
     }
 }

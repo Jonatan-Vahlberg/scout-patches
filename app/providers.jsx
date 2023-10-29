@@ -1,15 +1,16 @@
 // app/providers.tsx
-'use client'
+"use client";
 
-import {NextUIProvider} from '@nextui-org/react'
-import { PatchProvider } from '../context/PatchContext'
+import { NextUIProvider } from "@nextui-org/react";
+import { PatchProvider } from "../context/PatchContext";
+import { UserProvider } from "@/context/UserContext";
 
-export function Providers({children}) {
+export function Providers({ children }) {
   return (
     <NextUIProvider>
-      <PatchProvider>
-      {children}
-      </PatchProvider>
+      <UserProvider>
+        <PatchProvider>{children}</PatchProvider>
+      </UserProvider>
     </NextUIProvider>
-  )
+  );
 }
