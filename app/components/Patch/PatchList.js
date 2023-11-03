@@ -47,6 +47,7 @@ const PatchList = () => {
       ref={list}
       className="relative overflow-y-auto h-[calc(100vh-82px)] w-full p-4 gap-6"
     >
+      <h2 className="text-2xl font-semibold mb-4">Märken</h2>
       <PatchListFilters
         age_groups={patches.ageGroups}
         filters={patches.patchFilters}
@@ -74,7 +75,6 @@ const PatchList = () => {
           <PatchListItem
             key={patch.id}
             patch={patch}
-            ageGroups={patches.ageGroups}
           />
         ))}
       {patches.patchesLoading && (
