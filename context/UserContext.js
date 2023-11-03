@@ -1,4 +1,5 @@
 import { firebaseLogin } from "@/firebase/auth";
+import { getUserPatches } from "@/firebase/database";
 import { auth } from "@/firebase/firebase";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -36,6 +37,12 @@ const UserProvider = ({ children }) => {
          });
     },[]);
 
+    useEffect(() => {
+        if(user) {
+            _getUserPatches();
+        }
+    },[user])
+
     const _onUser = (user) => {
         setUser({
             uid: user.uid,
@@ -59,6 +66,15 @@ const UserProvider = ({ children }) => {
             onError(response);
             setUserLoading(false);
         }
+    }
+
+    const _getUserPatches = async () => {
+        if(!user) return;
+        setUserPatchesLoading(true);
+        const response = await getUserPatches(user.uid);
+        console.log("PATCH RESPONSE:: ", response);
+        setUserPatches(response);
+        setUserPatchesLoading(false);
     }
 
     return (
