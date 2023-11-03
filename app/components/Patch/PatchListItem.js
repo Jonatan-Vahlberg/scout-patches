@@ -1,24 +1,34 @@
 "use client"
 
-import { Card, CardHeader } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import Image from "next/image";
 import PatchListAgeIcon from "./PatchListAgeIcon";
 import Loadingbar from "../globals/Loadingbar";
 import Link from "next/link";
 import { useUser } from "@/context/UserContext";
 import { useEffect, useState } from "react";
+import { usePatches } from "@/context/PatchContext";
 
-const PatchListItem = ({ patch, ageGroups = [] }) => {
+const PatchListItem = ({ patch }) => {
     const user = useUser();
+    const patches = usePatches();
     
     const [userPatch, setUserPatch] = useState(null);
 
     useEffect(() => {
         if(user.userPatches.length > 0) {
-            const userPatch = user.userPatches.find((userPatch) => userPatch.patch_id === patch.id);
+            const userPatch = user.userPatches.find((userPatch) => userPatch.id === patch.id);
             setUserPatch(userPatch);
         }
     },[user.userPatches])
+
+    const getRequirementsPassedPercentage = () => {
+        if(userPatch?.requirements_passed) {
+            return (userPatch.requirements_passed.length / patch.requirements.length) * 100;
+        } else {
+            return 0;
+        }
+    }
 
 
   return (
@@ -40,7 +50,7 @@ const PatchListItem = ({ patch, ageGroups = [] }) => {
             <div className="flex items-center gap-2">
               {patch?.age_groups &&
                 patch.age_groups.map((age_group) => {
-                  const ageGroup = ageGroups.find((ag) => ag.id === age_group);
+                  const ageGroup = patches.ageGroups.find((ag) => ag.id === age_group);
                   return (
                     <PatchListAgeIcon key={age_group} age_group={ageGroup} />
                   );
@@ -54,7 +64,7 @@ const PatchListItem = ({ patch, ageGroups = [] }) => {
         </div>
         <Loadingbar 
             locked={!user.user}
-            barWidth={userPatch?.progress || 0}
+            barWidth={getRequirementsPassedPercentage()}
         />
       </Card>
     </Link>
