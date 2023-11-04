@@ -1,5 +1,5 @@
 import { firebaseLogin } from "@/firebase/auth";
-import { getUserPatches } from "@/firebase/database";
+import { getUserPatches } from "@/firebase/database/user";
 import { auth } from "@/firebase/firebase";
 import { createContext, useContext, useEffect, useState } from "react";
 

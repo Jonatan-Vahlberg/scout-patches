@@ -1,3 +1,5 @@
+import { getAgeGroups, getPatches } from "@/firebase/database/patches";
+
 const { createContext, useState, useEffect, useContext } = require("react");
 
 
@@ -52,23 +54,15 @@ const PatchProvider = ({ children }) => {
 
     const _getPatches = async () => {
         setPatchesLoading(true);
-        const url = "api/v1/patches";
-        const res = await fetch(url)
-        const data = await res.json();
-        if(data.status === 200) {
-            setPatches(data.data);
-        }
+        const response = await getPatches()
+        setPatches(response);
         setPatchesLoading(false);
     }
 
     const _getAgeGroups = async () => {
         setAgeGroupsLoading(true);
-        const url = "api/v1/age-groups";
-        const res = await fetch(url);
-        const data = await res.json();
-        if(data.status === 200) {
-            setAgeGroups(data.data.sort((a, b) => a.index - b.index));
-        }
+        const response = await getAgeGroups()
+        setAgeGroups(response);
         setAgeGroupsLoading(false);
     }
 
