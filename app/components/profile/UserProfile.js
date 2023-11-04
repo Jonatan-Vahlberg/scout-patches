@@ -5,7 +5,7 @@ import { useUser } from "../../../context/UserContext";
 
 const UserProfile = () => {
   const user = useUser();
-  console.log("USER:: ", user);
+  
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">Användare</h2>

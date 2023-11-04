@@ -15,14 +15,14 @@ const UserPatches = () => {
         if(user.userPatches.length > 0 && patches.patches.length > 0) {
             const _shownPatches = user.userPatches.map((userPatch) => {
                 let patch = patches.patches.find((patch) => patch.id === userPatch.id);
-                console.log("patch: ", patch)
+                
                 return patch;
             }).filter((patch) => patch !== undefined);
             setShownPatches(_shownPatches);
         }
     }
     ,[user.userPatches, patches.patches])
-    console.log("shownPatches: ", shownPatches, patches.patches ,user.userPatches.length)
+    
     return( 
         <div className="flex flex-col flex-1 overflow-hidden">
             <h2 className="text-2xl font-semibold my-4">Dina Märken</h2>

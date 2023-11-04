@@ -53,7 +53,7 @@ const UserProvider = ({ children }) => {
         setUserLoading(false);
     }
 
-    console.log("USER:: ", user)
+    
 
     const login = async (email, password, onLoggedIn = () => {}, onError = () => {}) => {
         setUserLoading(true);
@@ -72,7 +72,7 @@ const UserProvider = ({ children }) => {
         if(!user) return;
         setUserPatchesLoading(true);
         const response = await getUserPatches(user.uid);
-        console.log("PATCH RESPONSE:: ", response);
+        
         setUserPatches(response);
         setUserPatchesLoading(false);
     }

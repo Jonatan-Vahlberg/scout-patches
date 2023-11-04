@@ -29,10 +29,8 @@ const PatchListItem = ({ patch }) => {
             return 0;
         }
     }
-
-
   return (
-    <Link href={`/patch/${patch.id}`}>
+    <Link href={`/patches/${patch.id}?title=${patch.title}`}>
       <Card className="flex flex-col p-4 mb-4">
         <div className="flex items-start gap-3">
           <div>
