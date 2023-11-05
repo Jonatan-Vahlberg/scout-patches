@@ -3,6 +3,7 @@ const Checkbox = ({
     labelProps = {},
     children = "",
     size = "sm",
+    className = "",
     ...props
     }) => {
     const sizes = {
@@ -23,7 +24,7 @@ const Checkbox = ({
         disabled:bg-sweden-lightest disabled:cursor-not-allowed
             ${sizes[size]}
  
-          `}
+          ${className}`}
           type="checkbox"
           {...props}
         />
