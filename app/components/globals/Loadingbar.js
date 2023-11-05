@@ -18,7 +18,12 @@ const Loadingbar = ({
         className={`relative border-2 border-${color} h-${height} w-full rounded-full ${classNameBorder}`}
       >
         <div
-          className={`absolute top-0 bottom-0 left-0 bg-${color}  rounded-full ${classNameBar}`}
+          className={`
+          absolute 
+          top-0 bottom-0 left-0 
+          bg-${color}  
+          rounded-full transition-all duration-500
+          ${classNameBar}`}
           style={{ width: `${barWidth}%` }}
         ></div>
         
@@ -30,7 +35,10 @@ const Loadingbar = ({
             }}
             className={`absolute h-${
               height + 5
-            } aspect-square rounded-full bg-sweden-light top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center border-white border-2 p-1`}
+            } aspect-square rounded-full 
+            ${percent === 100 ? "bg-sweden-dark" : "bg-sweden-light"} 
+            top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+            flex justify-center items-center border-white border-2 p-1`}
           >
             {locked && (
             <FaLock className="text-white" size={10} />
