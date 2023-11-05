@@ -19,20 +19,30 @@ export const getUserPatches = async (userid) => {
 
 export const addUserPatch = async (userid, data) => {
     try {
-        const response = await set(ref(database, `users/${userid}/patches/${data.id}`), data);
-        return response;
+        await set(ref(database, `users/${userid}/patches/${data.id}`), data);
+        return {
+            status: "success",
+        }
     } catch (error) {
         console.warn("Error Patches: ", error);
-        return error;
+        return {
+            status: "error",
+            error: error,
+        }
     }
 }
 
 export const updateUserPatch = async (userid, patchid, data) => {
     try {
-        const response = await set(ref(database, `users/${userid}/patches/${patchid}`), data);
-        return response;
+        await set(ref(database, `users/${userid}/patches/${patchid}`), data);
+        return {
+            status: "success",
+        }
     } catch (error) {
         console.warn("Error Patches: ", error);
-        return error;
+        return {
+            status: "error",
+            error: error,
+        }
     }
 }

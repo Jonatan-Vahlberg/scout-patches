@@ -1,5 +1,5 @@
 import { firebaseLogin } from "@/firebase/auth";
-import { getUserPatches } from "@/firebase/database/user";
+import { addUserPatch as addPatch, updateUserPatch as updatePatch, getUserPatches } from "@/firebase/database/user";
 import { auth } from "@/firebase/firebase";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -13,8 +13,9 @@ const defaultState = {
 
     login: (email, password, onLoggedIn = () => {}, onError = () => {}) => {},
     register: (user) => {},
-    updateUserPatch: (patch) => {},
     logout: () => {},
+    addUserPatch: (patch, onResponsiveAgain = () => {}) => {},
+    updateUserPatch: (patch, onResponsiveAgain = () => {}) => {},
 };
 
 const UserContext = createContext(defaultState);
@@ -77,6 +78,31 @@ const UserProvider = ({ children }) => {
         setUserPatchesLoading(false);
     }
 
+    const addUserPatch = async (patch,onResponsiveAgain = () => {}) => {
+        if(!user) return;
+        const response = await addPatch(user.uid, patch);
+        if(response.status === "success") {
+            setUserPatches([...userPatches, patch]);
+        }   
+        onResponsiveAgain();
+    }
+
+    const updateUserPatch = async (patch, onResponsiveAgain = () => {}) => {
+        if(!user) return;
+        const response = await updatePatch(user.uid, patch.id, patch);
+        if(response.status === "success") {
+            const _userPatches = userPatches.map((_patch) => {
+                if(_patch.id === patch.id) {
+                    return patch;
+                }
+                return _patch;
+            });
+            console.log("success", _userPatches);
+            setUserPatches(_userPatches);
+        }
+        onResponsiveAgain();
+    }
+
     return (
         <UserContext.Provider value={{
             user,
@@ -84,6 +110,8 @@ const UserProvider = ({ children }) => {
             userPatches,
             userPatchesLoading,
             login,
+            addUserPatch,
+            updateUserPatch,
         }}>
             {children}
         </UserContext.Provider>
