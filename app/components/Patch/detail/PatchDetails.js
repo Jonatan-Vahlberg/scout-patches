@@ -4,9 +4,11 @@ import { usePatches } from "@/context/PatchContext";
 import { Card, Divider, Skeleton } from "@nextui-org/react";
 import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PatchListAgeIcon from "../PatchListAgeIcon";
 import PatchRequirement from "./PatchRequirement";
+import { useUser } from "@/context/UserContext";
+import Loadingbar from "../../globals/Loadingbar";
 
 const PatchDetails = () => {
     const { id } = useParams();
@@ -14,15 +16,71 @@ const PatchDetails = () => {
     const title = searchParams.get("title");
 
     const patches = usePatches();
+    const user = useUser();
 
     const [patch, setPatch] = useState(null);
+    const [userPatch, setUserPatch] = useState(null);
+    const [requirements, setRequirements] = useState([]);
+
+    const responsiveToChange = useRef(false);
+    
+    useEffect(() => {
+        return () => {
+            console.log("unmounting");
+            console.log(userPatch);
+            console.log(requirements);
+        }
+    },[])
 
     useEffect(() => {
         if(patches.patches.length > 0) {
-            const patch = patches.patches.find((patch) => patch.id === id);
-            setPatch(patch);
+            const _patch = patches.patches.find((patch) => patch.id === id);
+            if(_patch) {
+
+                setPatch(_patch);
+            }
+            responsiveToChange.current = true;
         }
     },[patches.patches, id])
+
+    useEffect(() => {
+        if(patches.patches.length > 0 && patch) {
+            const _userPatch = user.userPatches.find((userPatch) => userPatch.id === patch.id);
+            console.log(_userPatch);
+            if(_userPatch) {
+                setUserPatch(_userPatch);
+                setRequirements(_userPatch.requirements_passed);
+            }
+        }
+    },[patches.userPatches, patch])
+
+    useEffect(() => {
+        const responsiveAndUserPatch = responsiveToChange.current && userPatch && requirements.length !== userPatch.requirements_passed.length;
+        const responsiveAndRequirements = responsiveToChange.current && !userPatch && requirements.length > 0;
+        if(responsiveAndUserPatch || responsiveAndRequirements) {
+            console.log("onRequirementChange");
+            onRequirementChange();
+        }
+    },[requirements, responsiveToChange.current, userPatch])
+
+    const onRequirementChange = () => {
+        responsiveToChange.current = false;
+        const onResponsiveAgain = () => {
+            responsiveToChange.current = true;
+        }
+        if(userPatch) {
+
+            user.updateUserPatch({
+                ...userPatch,
+                requirements_passed: requirements
+            }, onResponsiveAgain)
+        } else {
+            user.addUserPatch({
+                id: patch.id,
+                requirements_passed: requirements
+            }, onResponsiveAgain)
+        }
+    }
 
     return (
         <Card shadow="md" className="m-4 p-4">
@@ -57,13 +115,24 @@ const PatchDetails = () => {
                     </div>
                     <p>{patch.description}</p>
                     <p className="font-semibold">Krav:</p>
+                    <Loadingbar
+                        locked={!user.user}
+                        barWidth={(requirements.length / patch.requirements.length) * 100}
+                    />
                     <ul className="pl-4">
                         {patch.requirements.map((requirement, index) => (
                             <PatchRequirement
                                 key={requirement}
-                                patch={patch}
                                 requirement={requirement}
-                                index={index}
+                                checked={requirements.includes(index)}
+                                onChange={(checked) => {
+                                    if(requirements.includes(index)) {
+                                        setRequirements(requirements.filter((req) => req !== index));
+                                    }
+                                    else {
+                                        setRequirements([...requirements, index]);
+                                    }
+                                }}
                             />
                         ))}
                     </ul>
