@@ -1,40 +1,25 @@
-"use client";
-import { Checkbox } from "@nextui-org/react";   
-
-import { useUser } from "@/context/UserContext";
-import { useEffect, useState } from "react";
+import Checkbox from "../../globals/Checkbox";
 
 
 
-const PatchRequirement = ({ patch, requirement, index = -1 }) => {
-    const user = useUser();
-
-    const [checked, setChecked] = useState(false);
-
-    useEffect(() => {
-        if(user.userPatches.length > 0) {
-            const userPatch = user.userPatches.find((userPatch) => userPatch.id === patch.id);
-            console.log("userPatch: ", userPatch)
-            if(userPatch?.requirements_passed) {
-                console.log("index: ", index)
-                const _checked = userPatch.requirements_passed.includes(index);
-                console.log("_checked: ", _checked)
-                setChecked(_checked);
-            }
-        }
-    },[user.userPatches])
-
+const PatchRequirement = ({ 
+    requirement, 
+    checked = false,
+    onChange = (checked) => {} 
+}) => {
 
     return (
         <li className="flex items-center gap-2 mb-2">
 
-            <input
-                type="checkbox"
+            <Checkbox size="md"
                 checked={checked}
-                onChange={(e) => setChecked(e.target.checked)}
-                className="w-full"
-            />
+                onChange={(e) => {
+                    onChange(e.target.checked);
+                }}
+                id={requirement}
+            >
                 {requirement}
+            </Checkbox>
         </li>
     )
 
