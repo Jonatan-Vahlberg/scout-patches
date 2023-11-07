@@ -2,6 +2,7 @@
 
 import { Button, Card, Skeleton } from "@nextui-org/react";
 import { useUser } from "../../../context/UserContext";
+import UserAchievements from "./UserAchivements";
 
 const UserProfile = () => {
   const user = useUser();
@@ -18,6 +19,7 @@ const UserProfile = () => {
             <Skeleton className="h-[40px] rounded-md mt-4" />
           </>
         )}
+        <UserAchievements/>
         {user.user && !user.userLoading && (
           <>
             <h2 className="text-xl font-semibold">{user.user.displayName}</h2>

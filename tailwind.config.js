@@ -63,7 +63,24 @@ module.exports = {
           1: '#00a8e1',
           2: '#d14800',
           3: '#da005e',
-        }
+        },
+
+        bronze: {
+          DEFAULT: '#cd7f32',
+          light: '#d6bfae',
+        },
+        silver: {
+          DEFAULT: '#BBC6CC',
+          light: '#f2f2f2',
+        },
+        gold: {
+          DEFAULT: '#ffd700',
+          light: '#fff0c4',
+        },
+        emerald: {
+          DEFAULT: '#50c878',
+          light: '#c9f7dc',
+        },
       },
       button: {
         primary: {
@@ -98,6 +115,12 @@ module.exports = {
           hover: '#2c2a5f',
           active: '#16143a',
         },
+      },
+      filters: {
+        bronze: 'invert(50%) sepia(96%) saturate(330%) hue-rotate(349deg) brightness(89%) contrast(97%)',
+        silver: 'invert(85%) sepia(10%) saturate(217%) hue-rotate(157deg) brightness(92%) contrast(90%)',
+        gold: 'invert(74%) sepia(76%) saturate(556%) hue-rotate(356deg) brightness(102%) contrast(109%)',
+        emerald: 'invert(99%) sepia(74%) saturate(1444%) hue-rotate(62deg) brightness(83%) contrast(85%)'
       },
     },
   },
