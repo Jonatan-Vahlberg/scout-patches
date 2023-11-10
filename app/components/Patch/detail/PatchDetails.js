@@ -26,9 +26,9 @@ const PatchDetails = () => {
     
     useEffect(() => {
         return () => {
-            console.log("unmounting");
-            console.log(userPatch);
-            console.log(requirements);
+            
+            
+            
         }
     },[])
 
@@ -46,7 +46,7 @@ const PatchDetails = () => {
     useEffect(() => {
         if(patches.patches.length > 0 && patch) {
             const _userPatch = user.userPatches.find((userPatch) => userPatch.id === patch.id);
-            console.log(_userPatch);
+            
             if(_userPatch) {
                 setUserPatch(_userPatch);
                 setRequirements(_userPatch.requirements_passed);
@@ -58,7 +58,7 @@ const PatchDetails = () => {
         const responsiveAndUserPatch = responsiveToChange.current && userPatch && requirements.length !== userPatch.requirements_passed.length;
         const responsiveAndRequirements = responsiveToChange.current && !userPatch && requirements.length > 0;
         if(responsiveAndUserPatch || responsiveAndRequirements) {
-            console.log("onRequirementChange");
+            
             onRequirementChange();
         }
     },[requirements, responsiveToChange.current, userPatch])

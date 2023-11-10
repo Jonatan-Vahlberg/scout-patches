@@ -1,6 +1,7 @@
 import { firebaseLogin } from "@/firebase/auth";
 import { addUserPatch as addPatch, updateUserPatch as updatePatch, getUserPatches } from "@/firebase/database/user";
 import { auth } from "@/firebase/firebase";
+import Achivements from "@/utils/AchivementKit";
 import { createContext, useContext, useEffect, useState } from "react";
 
 
@@ -43,6 +44,13 @@ const UserProvider = ({ children }) => {
             _getUserPatches();
         }
     },[user])
+
+    useEffect(() => {
+        if(userPatches.length > 0) {
+            const achievements = new Achivements(userPatches, []);
+            
+        }
+    },[userPatches]);
 
     const _onUser = (user) => {
         setUser({
@@ -97,7 +105,7 @@ const UserProvider = ({ children }) => {
                 }
                 return _patch;
             });
-            console.log("success", _userPatches);
+            
             setUserPatches(_userPatches);
         }
         onResponsiveAgain();

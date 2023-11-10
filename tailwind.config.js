@@ -116,12 +116,16 @@ module.exports = {
           active: '#16143a',
         },
       },
-      filters: {
-        bronze: 'invert(50%) sepia(96%) saturate(330%) hue-rotate(349deg) brightness(89%) contrast(97%)',
-        silver: 'invert(85%) sepia(10%) saturate(217%) hue-rotate(157deg) brightness(92%) contrast(90%)',
-        gold: 'invert(74%) sepia(76%) saturate(556%) hue-rotate(356deg) brightness(102%) contrast(109%)',
-        emerald: 'invert(99%) sepia(74%) saturate(1444%) hue-rotate(62deg) brightness(83%) contrast(85%)'
+      keyframes: {
+        twinkling: {
+          '0%': { opacity: 0, transform: 'scale(0)' },
+          '50%': { opacity: 1, transform: 'scale(1)' },
+          '100%': { opacity: 0, transform: 'scale(0)' },
+        },
       },
+      animation: {
+        twinkling: 'twinkling 1s ease-in-out forwards',
+      },  
     },
   },
   darkMode: 'class', // or 'media'
