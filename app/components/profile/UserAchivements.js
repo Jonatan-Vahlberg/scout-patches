@@ -18,7 +18,7 @@ const UserAchievements = () => {
                 ))}
             </div>
             <div className="hidden border-bronze bg-bronze-light text-bronze filter-none"/>
-            <div className="hidden border-silver bg-silver-light text-silver grayscale blur-[2px]"/>
+            <div className="hidden border-silver bg-silver-light text-silver grayscale blur-[1px]"/>
             <div className="hidden border-gold bg-gold-light text-gold"/>
             <div className="hidden border-emerald bg-emerald-light text-emerald"/>
         </div>

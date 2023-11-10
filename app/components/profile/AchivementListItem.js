@@ -154,7 +154,7 @@ const AchievementListItem = ({ achievement }) => {
                 rounded-full shadow-md
                 ${achievement.colors.border}
                 ${achievement.colors.bg}
-                ${achievement.achived ? "filter-none" : "grayscale"}
+                ${achievement.achived ? "filter-none" : "grayscale blur-[1px]"}
             `}>
 
                 {achievement.achived && stars.map((star, index) => (

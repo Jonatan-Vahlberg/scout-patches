@@ -8,9 +8,9 @@ export default function Profile() {
     <AchivementProvider>
 
       <div
-        className="relative overflow-hidden h-[calc(100vh-82px)] w-full p-4 gap-6"
+        className="relative h-[calc(100vh-82px)] w-full p-4 gap-6"
         >
-        <div className="flex flex-col h-full overflow-auto">
+        <div className="flex flex-col min-h-full">
           <UserProfile />
           <UserPatches />
         </div>
