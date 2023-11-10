@@ -47,17 +47,23 @@ class AchivementLevels{
         }
     }
 
-    getTotal = (level = this.BRONZE, totalPatches = 10) => {
+    getTotal = (level = this.BRONZE, ageGroup = 0) => {
+        let totals = [5,4,3,0]
         switch(level){
             case this.SILVER:
-                return Math.floor(totalPatches / 3);
+                totals = [10,8,6,1]
+                break;
             case this.GOLD:
-                return Math.ceil(totalPatches / 2);
+                totals = [15,12,9,2]
+                break;
             case this.EMERALD:
-                return totalPatches;
+                totals = [20,16,12,3]
+                break;
             default:
-                return Math.floor(totalPatches / 5);
+                break;
         }
+
+        return totals[ageGroup];
     }
 
 
@@ -116,7 +122,8 @@ class AchivementKit {
             
             return this.levels.levels.map((level) => {
                 const levelTranslation = this.levels.getTranslation(level);
-                const total = this.levels.getTotal(level, ageGroupPatches.length);
+                const total = this.levels.getTotal(level, ageGroup.index);
+                console.log("total patches", ageGroupPatches.length)
                 return this.getAchivement({
                     total,
                     level,
