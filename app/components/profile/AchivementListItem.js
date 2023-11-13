@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import Loadingbar from "../globals/Loadingbar";
 
 //The achivement should have a twinkling animation
 
@@ -130,7 +131,6 @@ const TwinklingStar = ({
 const AchievementListItem = ({ achievement }) => {
     const [stars, setStars] = useState([])
     const iteration = useRef(0)
-    
     useEffect(() => {
         setInterval(() => {
             if(iteration.current * 5 >= _stars.length) iteration.current = 0
@@ -166,9 +166,13 @@ const AchievementListItem = ({ achievement }) => {
                     className="w-full h-full rounded-full object-contain filter-bronze"
                 />
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center w-[calc(100%-64px)]">
                 <h3 className="text-xl font-semibold">{achievement.title}</h3>
                 <p className="text-sm">{achievement.description}</p>
+                <div>
+                    <Loadingbar
+                    />
+                </div>
             </div>
         </div>
     )
